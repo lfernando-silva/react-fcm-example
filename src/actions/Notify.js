@@ -31,3 +31,28 @@ export const notifyFCM = () => {
         })
         .catch(err => console.log("Sem permissão " + err))
 }
+
+export const unsubscribe = () => {
+    return Notifier
+        .requestPermission()
+        .then(() => Notifier.getToken())
+        .then(token => {
+            return axios({
+                method: 'post',
+                url: `https://iid.googleapis.com/iid/v1:batchRemove`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `key=${config.apiKey}`
+                },
+		data: {
+   			"to": "/topics/inerge_info",
+   			"registration_tokens": [token],
+		}
+            }).then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err)
+            })
+        })
+        .catch(err => console.log("Sem permissão " + err))
+}
