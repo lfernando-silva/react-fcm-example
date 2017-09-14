@@ -37,11 +37,15 @@ const makeUnsubscribeRequest = (tokens, topic) => makeRequest(`:batchRemove`,{
     "registration_tokens": tokens, //ARRAY DE TOKENS
 })
 
+const listenSometopic = () => getToken().then(token => makeTopicRequest(token,'some_topic'))
+
+const listenSomeOthertopic = () => getToken().then(token => makeTopicRequest(token,'some_other_topic'))
+
 export const unsubscribe = topic => getToken().then(token => makeUnsubscribeRequest([token], topic))
 
 export const listenFCM = params => {
     return Promise.all([
-        listenWeather(),
-        listenDevices(`user_id_${params.userId}`)
+        listenSometopic(),
+        listenSomeOthertopic()
     ])
 }
