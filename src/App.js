@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {notifyFCM} from './actions/Notify'
+import {listenFCM} from './actions/Notify'
 
 class App extends Component {
   render() {
-    notifyFCM()
+    listenFCM().then(console.log)
     return (
       <div className="App">
         <div className="App-header">
